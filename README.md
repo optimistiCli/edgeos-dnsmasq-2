@@ -1,5 +1,11 @@
 # Run second dnsmasq on EdgeRouter
 
+- [Why would anyone need a second one](#why-would-anyone-need-a-second-one)
+- [Preparing the router](#preparing-the-router)
+  - [Network layout](#network-layout)
+  - [Address for the new name server](#address-for-the-new-name-server)
+  - [Reconfiguring the "first" dnsmasq](#reconfiguring-the-first-dnsmasq)
+
 ## Why would anyone need a second one
 If you need to use alternative name server on some hosts in your network you 
 can just set them to use those servers either manually or via dhcp on the 
