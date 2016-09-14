@@ -13,6 +13,7 @@
   - [Compatibility](#compatibility)
   - [Restarting second dnsmasq](#restarting-second-dnsmasq)
   - [More instances and naming](#more-instances-and-naming)
+  
 ## Disclaimer
 You can use this script in any manner that suits you though remember at all
 times that by using it you agree that you use it at your own risk and neither 
