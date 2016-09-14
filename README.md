@@ -1,15 +1,22 @@
 # Run second dnsmasq on EdgeRouter
 
-- [Why would anyone need a second one](#why-would-anyone-need-a-second-one)
-- [Preparing the router](#preparing-the-router)
-  - [Network layout](#network-layout)
-  - [Address for the new name server](#address-for-the-new-name-server)
-  - [Reconfiguring the "first" dnsmasq](#reconfiguring-the-first-dnsmasq)
 
-## Why would anyone need a second one
-If you need to use alternative name server on some hosts in your network you 
-can just set them to use those servers either manually or via dhcp on the 
-EdgeRouter like that:
+## Disclaimer
+You can use this script in any manner that suits you though remember at all
+times that by using it you agree that you use it at your own risk and neither 
+I nor anybody else except for yourself is to be held responsible in case 
+anything goes wrong as a result of you using this script.
+
+## Why would anyone need a second one?
+The main job dnsmasq is tasked with by the EdgeOS is forwarding name resolution
+requests to an upstream DNS server tipically hosted by the ISP. The good thing 
+about dnsmasq is that it also can read hosts file on your router. Hence it can 
+be configured to resolve names of some of the hosts on your LAN.
+
+Suppose that you need to use an alternative name server on certain hosts of 
+your network. Usually you would just set DNS servers on those hosts manually.
+Alternatively you could configure the EdgeOS to set alternative DNS on a 
+selected host via dhcp by doing something like that:
 ```
 edit service dhcp-server shared-network-name LAN subnet 192.168.1.0/24
 edit static-mapping OtherDNS 
@@ -17,9 +24,7 @@ set ip-address 192.168.1.23
 set mac-address 12:34:56:78:90:AB
 set static-mapping-parameters "option domain-name-servers 8.8.8.8, 8.8.4.4;" 
 ```
-The good thing about dnsmasq is that it can read hosts file on your router. 
-Hence it can be configured to resolve names of some of the other hosts on your 
-LAN. Problem of course is that an external DNS can do nothing of the kind:
+But either scenario disables local host name resolution:
 ```
 $ nslookup
 > server
@@ -54,23 +59,23 @@ Address:	8.8.8.8#53
 My solution is to run a second instance of dnsmasq on the EdgeRouter.
 
 ## Preparing the router
-Before the second dnsmasq can be used the first one, the one run by the system, 
+Before the second dnsmasq can be used the first dnsmasq run by the system, 
 needs to be reconfigured.
 ### Network layout
-Before we start let's assume for the sake of this demonstration that the 
-EdgeRouter is configured in the following manner:
+For the sake of this tutorial let's assume for that the EdgeRouter is 
+configured in the following manner:
 * eth0 is connected to the WAN, has a dynamic IP address and is of little 
 interest to us
-* eth1 is configured with the address 192.168.0.1 and is connected to the 
-server room switch
-* eth2 is 192.168.1.1 and the rest of the LAN is routed throug it
+* eth1 is configured with the address 192.168.0.1 and is connected to a 
+server
+* eth2 is 192.168.1.1 and the rest of wired LAN is routed throug it
 * eth3 is 192.168.2.1 and serves the wireless clients
 
-There is a local server in the server room, it's known as "localserver" and 
-it's IP is 192.168.0.123. Also there's a workstation on the LAN that needs to 
-use 8.8.8.8 and 8.8.4.4 for DNS resolution, it's name is "OtherDNS", it has a 
-NIC with MAC-address 12:34:56:78:90:AB. Wireless clients also need access to 
-the second dnsmasq, but are configured manually.
+The abovementioned local server's hostname is "localserver" and it's IP is 
+192.168.0.123. Also there's a workstation on the LAN that needs to use 8.8.8.8 
+and 8.8.4.4 for DNS resolution, it's name is "OtherDNS", its NIC's MAC-address 
+is 12:34:56:78:90:AB. Wireless clients also need use the second dnsmasq, but 
+they are configured manually.
 ### Address for the new name server
 Clients will typically use the router IP to access local DNS server, so in our 
 setup the first dnsmasq is expected to listen at 192.168.1.1 and 192.168.2.1.
