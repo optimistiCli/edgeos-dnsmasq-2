@@ -261,7 +261,7 @@ Address: 54.183.101.244
 ```
 ## Peculiarities
 ### Compatibility
-This script was tested on EdgeRouter X firmware versions 1.8.5 and 1.9.0. In my 
+This script was tested on EdgeRouter X firmware versions 1.8.5 - 1.9.1. In my 
 experience it can survive reboot and software update. Since it has very basic 
 requirements I expect it to be compatible with other EdgeOS devices and 
 firmware versions, but I cannot be entirely sure.
@@ -270,10 +270,10 @@ To restart the second dnsmasq just run the script. It should work, unless you
 renamed the script or reconfigured the path to the pid file or did something 
 similar. 
 ### More instances and naming
-Theoretically speaking you can use this script to run more the 3rd, the 4th and 
-so on instances of dnsmasq. I never tested it, but don't see any reason why it 
-should not work. Copying dnsmasq-2 to dnsmasq-3, dnsmasq-4 etc and editing 
-addresses and servers list in every copy. Please also note that the scrip will 
-not run unless it is named according to the convention indicated above.
+Theoretically speaking you can use this script to run the 3rd, the 4th and so 
+on instances of dnsmasq. I never tested it, but don't see why it should not 
+work. Just try copying dnsmasq-2 to dnsmasq-3, dnsmasq-4 etc and editing 
+addresses, servers and domains in every copy. Please also note that the script 
+will not run unless it is named according to the convention indicated above.
 
 Enjoy!
