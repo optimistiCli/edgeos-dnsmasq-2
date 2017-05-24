@@ -188,6 +188,12 @@ these servers:
 ```
 SERVERS='8.8.8.8 8.8.4.4'
 ```
+If the clients need to be configured as members of a domain then the following 
+line should be edited accordingly. Otherwise if there is no local search domain 
+then this line should be commented out altogether.
+```
+DOMAIN_NAME='mydomain.net'
+```
 The rest of the parameters do not require editing. Please read the comments 
 inside the script if you feel like figuring them out.
 ### Installation
